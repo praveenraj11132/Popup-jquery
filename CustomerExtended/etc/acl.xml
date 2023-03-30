@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Acl/etc/acl.xsd">
+    <acl>
+        <resources>
+            <resource id="Magento_Backend::admin" title="admin">
+                <resource id="Magento_Backend::stores" title="store">
+                    <resource id="Magento_Backend::stores_settings" title="setting">
+                        <resource id="Magento_Config::config" title="config">
+                            <resource id="Wheelpros_CustomerExtended::customer" title="WheelPros Customer Configuration"/>
+                        </resource>
+                    </resource>
+                </resource>
+            </resource>
+        </resources>
+    </acl>
+</config>

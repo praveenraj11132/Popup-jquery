@@ -1,0 +1,51 @@
+<!--@subject Requesting Access for Dealerline @-->
+<!--@vars
+{"store url=\"\"":"Store Url",
+"skin url=\"images/logo_email.gif\" _area='frontend'":"Email Logo Image"}
+@-->
+<!--@styles
+body,td { color:#2f2f2f; font:11px/1.35em Verdana, Arial, Helvetica, sans-serif; }
+@-->
+{{template config_path="design/email/header_template"}}
+<table>
+    <tr>
+        <td>
+            <table>
+                <tr>
+                        <h5>{{trans "Hello"}},</h5>
+                </tr>
+                <tr>A user has requested access for dealerline platform and below are his details</tr>
+                <tr></tr>
+                <tr>
+                    <td>
+                        <table border="1px solid black" style="border-collapse: collapse;">
+                            <tr>
+                                <th>First Name</th>
+                                <td>{{var firstname}}</td>
+                            </tr>
+                            <tr>
+                                <th>Last Name</th>
+                                <td>{{var lastname}}</td>
+                            </tr>
+                            <tr>
+                                <th>Email</th>
+                                <td>{{var email}}</td>
+                            </tr>
+                            <tr>
+                                <th>Business Name</th>
+                                <td>{{var business_name}}</td>
+                            </tr>
+                            <tr>
+                                <th>Wheelpros Account Number</th>
+                                <td>
+                                    {{var account_number}}
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>
+{{template config_path="design/email/footer_template"}}

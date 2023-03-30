@@ -1,0 +1,251 @@
+<?php
+
+/**
+ * @var History $block
+ */
+
+use Wheelpros\CustomerExtended\Block\Order\History;
+
+$customerOrders = $block->getCustomerOrders();
+$orderData = [];
+$orderStatus = [];
+foreach ($customerOrders as $item) {
+    $statusCode = '';
+    switch ($item['ccrz__OrderStatus__c']) {
+        case 'Cancelled':
+            $statusCode = 'red';
+            break;
+        case 'Returned':
+        case 'Completed':
+            $statusCode = 'green';
+            break;
+        default:
+            $statusCode = 'yellow';
+    }
+    $orderData[] = [
+        'order' => $item['WP_SAP_Order_Number__c'] ?? "",
+        'order_reference' => $item['ccrz__OrderName__c'] ?? "",
+        'po_number' => $item['WP_PONumber__c'] ?? "",
+        'order_date' => $item['ccrz__OrderDate__c'] ?? "",
+        'order_amount' => $item['ccrz__TotalAmount__c'] ?? "",
+        'order_status' => [
+            'status' => $item['ccrz__OrderStatus__c'] ?? "",
+            'status_code' => $statusCode
+        ],
+        'actions' => $block->getReorderUrl($item['Id'] ?? "")
+    ];
+    $orderStatus[$item['ccrz__OrderStatus__c'] ?? '0'] = $item['ccrz__OrderStatus__c'] ?? 'pending';
+}
+?>
+
+<div class="dataTables">
+    <h5 class="dataTables-title"><?= $block->escapeHtml(__('Search Order By')); ?></h5>
+    <fieldset class="fieldset dataTables-fieldset d-flex align-item-start">
+        <div class="field field-search col-lg col-6 label-valid">
+            <label class="label">Search Order</label>
+            <div class="control">
+                <input type="text" class="order-input" placeholder="Search by Order Number…" name="search-order">
+            </div>
+        </div>
+        <div class="field col-lg col-6 label-valid">
+            <label class="label">From</label>
+            <div class="control">
+                <input type="date" class="order-input" name="min" placeholder="DD/MM/YY">
+            </div>
+        </div>
+        <div class="field col-lg col-6 label-valid">
+            <label class="label">To</label>
+            <div class="control">
+                <input type="date" class="order-input" name="max" placeholder="DD/MM/YY">
+            </div>
+        </div>
+        <div class="field col-lg col-6 label-valid">
+            <label class="label">Order</label>
+            <div class="control">
+                <select id="sort" name="sort" class="order-select">
+                    <option value="">All Order Status</option>
+                    <?php foreach ($orderStatus as $status => $label) : ?>
+                        <option value="<?= $status ?>"><?= $label ?></option>
+                    <?php endforeach; ?>
+                </select>
+            </div>
+        </div>
+    </fieldset>
+    <div class="d-flex justify-content-end dataTables-actions">
+        <button type="button" id="clearEl" disabled class="action primary stroked uppercase">Reset</button>
+        <button type="button" id="submitEl" disabled class="action primary submit uppercase">Search Orders</button>
+    </div>
+    <div class="table-wrapper">
+        <div class="dataTables-sorter">
+            <div class="drop-container custom-dropdown">
+                <div data-role="limiter"
+                    data-toggle="dropdown"
+                    data-mage-init='{"custom-dropdown":{
+                            "popup": {
+                                "title": "<?= $block->escapeHtml(__('View')) ?>"
+                            }
+                        }
+                    }'
+                    class="action drop-label"
+                    data-action="customer-menu-toggle">
+                    <span><?= $block->escapeHtml(__('View')) ?>:
+                        <span class="custom-dropdown-selected selected theme-primary">
+                            <?= $block->escapeHtml(__('10 / Page')) ?>
+                        </span>
+                    </span>
+                </div>
+                <div data-target="dropdown" class="drop-options order-limiter" data-drop-id="limiter">
+                    <span data-option="10" class="drop-option checkbox selected">
+                        <?= $block->escapeHtml(__('10 / Page')) ?>
+                    </span>
+                    <span data-option="20" class="drop-option checkbox">
+                        <?= $block->escapeHtml(__('20 / Page')) ?>
+                    </span>
+                    <span data-option="30" class="drop-option checkbox">
+                        <?= $block->escapeHtml(__('30 / Page')) ?>
+                    </span>
+                </div>
+            </div>
+        </div>
+        <table id="my-wrapper" class="table odd-stripe">
+            <thead>
+                <tr>
+                    <th>Order #</th>
+                    <th>Order Ref</th>
+                    <th>PO Number</th>
+                    <th>Order Date</th>
+                    <th>Amount</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+        </table>
+    </div>
+</div>
+
+<script type="text/javascript">
+    require([
+        'jquery',
+        'moment',
+        'datatables'
+    ], function($, moment, datatables) {
+        $(document).ready(function() {
+            var table,
+                seletedState = {},
+                dateFormat = 'YYYY-MM-DD',
+                inputEl = $('.order-input'),
+                selectEl = $('.order-select'),
+                clearEl = $('#clearEl'),
+                submitEl = $('#submitEl'),
+                minEl = $('.order-input[name="min"]'),
+                maxEl = $('.order-input[name="max"]'),
+                orderEl = $('.order-select[name="sort"]'),
+                pageLimit = $('.order-limiter .drop-option');
+
+            // Custom range filtering function
+            $.fn.dataTable.ext.search.push(function(settings, data, dataIndex) {
+                var min = moment(new Date(minEl.val()))?.format(dateFormat),
+                    max = moment(new Date(maxEl.val()))?.format(dateFormat),
+                    date = moment(new Date(data[3]))?.format(dateFormat);
+
+                if (
+                    (!moment(min, dateFormat).isValid() && !moment(max, dateFormat).isValid()) ||
+                    (moment(date, dateFormat).isSameOrAfter(min) && !moment(max, dateFormat).isValid()) ||
+                    (!moment(min, dateFormat).isValid() && moment(date, dateFormat).isSameOrBefore(max)) ||
+                    (moment(date, dateFormat).isSameOrAfter(min) && moment(date, dateFormat).isSameOrBefore(max))
+                ) {
+                    return true;
+                }
+
+                return false;
+            })
+
+            $.fn.dataTable.ext.search.push(function(settings, data, dataIndex) {
+                var status = data[5],
+                    order = orderEl.val();
+
+                if (
+                    order === '' ||
+                    order === status
+                ) {
+                    return true;
+                }
+
+                return false;
+            })
+
+            table = $("#my-wrapper").DataTable({
+                info: false,
+                order: [],
+                ordering: false,
+                data: <?php echo json_encode($orderData); ?>,
+                columns: [
+                    {
+                        data: 'order',
+                        render: (data, type, row) => `<a class="order" href="<?php echo $block->getRedirectOrder(); ?>" > ${data}</a>`
+                    },
+                    {
+                        data: 'order_reference'
+                    },
+                    {
+                        data: 'po_number'
+                    },
+                    {
+                        data: 'order_date'
+                    },
+                    {
+                        data: 'order_amount'
+                    },
+                    {
+                        data: 'order_status',
+                        render: (data, type, row) => `<span class="dataTables-status-${data.status_code}">${data.status}</span>`
+                    },
+                    {
+                        data: 'actions',
+                        render: (data, type, row) => `<a class="primary uppercase" href='${data}'>Re-Order</a>`
+                    }
+                ],
+                language: {
+                    search: "",
+                    lengthMenu: "",
+                }
+            });
+
+            // Changes to the inputs will trigger a redraw to update the table
+            table.on('draw', function () {
+                let active = Object.values(seletedState).filter(state => !!state);
+                $('.dataTables-actions button:not(.submit)').attr('disabled', active.length ? null : true);
+            });
+            pageLimit.on('click', function() {
+                let seletedEl = $(this).parents('.drop-container').find('.custom-dropdown-selected');
+                seletedEl.text($(this).text());
+                table.page.len($(this).data("option") ?? 10).draw();
+            });
+            selectEl.on('change', function() {
+                setFilter(this)
+            });
+            inputEl.on('input', function() {
+                setFilter(this)
+            });
+            clearEl.on('click', function() {
+                inputEl.val('').trigger('input');
+                selectEl.val('').trigger('change');
+                table.search('').draw();
+                $('.dataTables-actions button').attr('disabled', true);
+            });
+            submitEl.on('click', function() {
+                let searchText = $('.order-input[name="search-order"]').val();
+                if (searchText) {
+                    table.search(searchText).draw();
+                } else {
+                    table.search('').draw();
+                }
+            });
+            function setFilter(el) {
+                seletedState[$(el).attr('name')] = $(el).val();
+                let active = Object.values(seletedState).filter(state => !!state);
+                // $('.dataTables-actions button.submit')./('disabled', active.length ? null : true);
+            }
+        })
+    });
+</script>

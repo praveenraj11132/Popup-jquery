@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="2columns-left" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd" label="Customer My Account (All Pages)" design_abstraction="custom">
+    <body>
+        <referenceBlock name="page.main.title">
+            <action method="setPageTitle">
+                <argument translate="true" name="title" xsi:type="string">My Orders</argument>
+            </action>
+        </referenceBlock>
+        <referenceBlock name="customer_account_navigation">
+            <block class="Magento\Customer\Block\Account\SortLinkInterface" name="customer-account-navigation-customer-orders-link">
+                <arguments>
+                    <argument name="path" xsi:type="string">request/recent/order</argument>
+                    <argument name="label" xsi:type="string" translate="true">My Orders</argument>
+                    <argument name="sortOrder" xsi:type="number">220</argument>
+                </arguments>
+            </block>
+        </referenceBlock>
+        <referenceBlock name="customer_account_navigation">
+            <block class="Magento\Customer\Block\Account\SortLinkInterface" name="customer-account-navigation-customer-code">
+                <arguments>
+                    <argument name="path" xsi:type="string">request/customercode/index</argument>
+                    <argument name="label" xsi:type="string" translate="true">Customer Code</argument>
+                    <argument name="sortOrder" xsi:type="number">220</argument>
+                </arguments>
+            </block>
+        </referenceBlock>
+    </body>
+</page>

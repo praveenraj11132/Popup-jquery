@@ -1,0 +1,235 @@
+//
+//  Common
+//  _____________________________________________
+
+@text__color: #080808;
+
+& when (@media-common = true) {
+    .dataTables {
+        &-title {
+            font-weight: bold;
+        }
+        &-fieldset {
+            input {
+                .lib-input-placeholder(
+                    @_input-placeholder-color: @color-gray40,
+                    @_input-placeholder-font-weight: 400
+                )
+            }
+            select {
+                background-image: url('../images/select-bg-black.svg');
+            }
+        }
+        &-sorter {
+            .custom-dropdown-selected {
+                padding-left: 10px;
+            }
+            .drop-options {
+                left: 0;
+            }
+        }
+        &-actions {
+            border-bottom: 1px solid @text__color;
+        }
+        &_filter {
+            display: none;
+        }
+        &_paginate {
+            display: flex;
+            padding: 36px 0;
+            margin-top: 36px;
+            justify-content: center;
+            border-top: 1px solid @color-lighter-grayish;
+            :is(.paginate_button, .ellipsis) {
+                margin: 0 25px 0 0;
+            }
+            .paginate_button {
+                color: #080808;
+                cursor: pointer;
+                font-size: 18px;
+                font-weight: 600;
+                text-decoration: none;
+                &.current {
+                    color: #e50019;
+                    font-weight: 700;
+                    text-decoration: underline;
+                }
+            }
+
+            > .paginate_button {
+                color: #e50019;
+                font-weight: 700;
+                text-transform: uppercase;
+                &.previous::before {
+                    font-size: 12px;
+                    line-height: inherit;
+                    content: '\e617';
+                    font-family: 'luma-icons';
+                    font-weight: 300;
+                    padding-right: 1rem;
+                }
+                &.next::after {
+                    font-size: 12px;
+                    line-height: inherit;
+                    content: '\e608';
+                    font-family: 'luma-icons';
+                    font-weight: 300;
+                    padding-left: 1rem;
+                }
+                &.disabled {
+                    color: @color-lighter-grayish;
+                }
+            }
+        }
+        &-status {
+            &-red {
+                cozlor: #E3503E;
+            }
+            &-green {
+                color: #00B21B;
+            }
+            &-yellow {
+                color: #F0920B;
+            }
+        }
+    }
+}
+
+//
+//  Desktop
+//  _____________________________________________
+
+.media-width(@extremum, @break) when (@extremum = 'min') and (@break = @screen__lg + 1) {
+    .dataTables {
+        &-title {
+            margin: 36px 0 43px;
+        }
+        &-sorter {
+            margin: 36px 0;
+            .drop-label {
+                font-size: 24px;
+                line-height: 30px;
+            }
+        }
+        &-actions {
+            gap: 24px;
+            padding: 12px 0 36px;
+        }
+        &-fieldset {
+            gap: 36px;
+            .field-search {
+                max-width: 36.304%;
+                flex-basis: 36.304%;
+            }
+        }
+    }
+}
+
+// Customer Code DESKTOP View
+// ---------------------------------
+
+.popupbtn{
+    border-color: red;
+    background-color: white;
+    color:red;
+}
+.popup-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 9999;
+
+    .popup-content {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 50%;
+        max-height: 80%;
+        overflow-y: auto;
+        background-color: #fff;
+        border: 1px solid #ccc;
+        padding: 40px;
+
+        .close-container {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 30px;
+            cursor: pointer;
+        }
+
+        .name-category {
+            display: flex;
+            gap: 30px;
+
+            .customer-code-name {
+                #code-name {
+                    border: 1px solid lightgrey;
+                    width: 380px;
+                }
+            }
+
+            .add-category {
+                margin-top: 23px;
+
+                    #category {
+                        border-color: red;
+                        background-color: white;
+                        color: red;
+                        height: 40px;
+                        width: 160px;
+                    }
+            }
+        }
+
+            .middle-section {
+                display: flex;
+                gap: 10px;
+
+                .product-category {
+                    #pro-cate {
+                        border: 1px solid lightgrey;
+                    }
+                }
+
+                .price-type {
+                    #price {
+                        border: 1px solid lightgrey;
+                    }
+                }
+
+                .percent-markup {
+                    #percent {
+                        border: 1px solid lightgrey;
+                    }
+                }
+            }
+
+            .footer-section {
+                display: flex;
+                gap: 20px;
+                margin-left: 280px;
+
+                .cancel-btn {
+                    #cancel {
+                        border-color: red;
+                        background-color: white;
+                        color: red;
+                    }
+                }
+
+                .create-customer-code-btn{
+                    #create-customer-code {
+                        border-color: red;
+                        background-color: red;
+                        color: white;
+                    }
+                }
+            }
+
+    }
+}

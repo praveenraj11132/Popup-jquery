@@ -1,0 +1,14 @@
+<h5>ORDER INFORMATION</h5>
+<?php
+$orderDetails = $block->getOrderDetails();
+$orderData = [];
+if ($orderDetails == 'ccrz__OrderId__c') {
+    foreach ($orderDetails as $item) {
+        $orderData[] = [
+            'order' => $item['WP_SAP_Order_Number__c'],
+            'order_reference' => $item['ccrz__OrderName__c']
+        ];
+    }
+}
+print_r($orderData);
+?>

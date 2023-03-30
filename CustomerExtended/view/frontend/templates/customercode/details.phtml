@@ -1,0 +1,50 @@
+<div id="popup">
+<div class="popup-btn">
+    <button class="popupbtn">CREATE CUSTOMER CODE</button>
+</div>
+
+<div class="popup-container" id="" style="display: none;">
+    <div class="popup-content">
+        <div class="close-container">&times;</div>
+        <div id="header"><h5>ADD NEW FORMULA</h5></div><hr>
+            <div class="name-category">
+                <div class="customer-code-name">
+                    Customer Code Name<input type="text" id="code-name">
+                </div>
+                <div class="add-category">
+                    <button id="category">ADD CATEGORY</button>
+                </div>
+            </div><hr>
+        <div class="middle-section">
+            <div class="product-category">
+                Product Category<input type="text" id="pro-cate">
+            </div>
+            <div class="price-type">
+                Price Type<input type="text" id="price">
+            </div>
+            <div class="percent-markup">
+                Percent Markup<input type="text" id="percent">
+            </div>
+        </div><hr>
+        <div class="footer-section">
+            <div class="cancel-btn">
+                <button id="cancel">Cancel</button>
+            </div>
+            <div class="create-customer-code-btn">
+                <button id="create-customer-code">CREATE CUSTOMER CODE</button>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+
+<script type="text/x-magento-init">
+{
+"#popup" :
+  {
+     "Wheelpros_CustomerExtended/js/customercodepopup": {}
+  }
+}
+</script>
+
+

@@ -1,0 +1,105 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <section id="wheelpros_customer" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+            <label>Customer</label>
+            <tab>wheelpros</tab>
+            <resource>Wheelpros_CustomerExtended::customer</resource>
+            <group id="customer_login_form" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Customer Login Form Configuration</label>
+                <field id="credit_app_url" translate="label comment" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Credit App Web Url</label>
+                    <comment>Provide full URL including https://</comment>
+                </field>
+                <field id="existing_customer_content" translate="label comment" type="textarea" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Existing Customer Content</label>
+                    <comment>Add the content that should be displayed below Existing customer block</comment>
+                </field>
+                <field id="new_customer_content" translate="label comment" type="textarea" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>New Customer Content</label>
+                    <comment>Add the content that should be displayed below New customer block</comment>
+                </field>
+            </group>
+            <group id="request_access_form" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Request Access Form Configuration</label>
+                <field id="recipient_email" translate="label comment" type="textarea" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Recipient Email</label>
+                    <comment>Please add email of the recipient, if you want multiple recipients add it in comma separated manner</comment>
+                </field>
+                <field id="send_email_code" translate="label" type="select" sortOrder="10"
+                       showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Send Email From</label>
+                    <source_model>Magento\Config\Model\Config\Source\Email\Identity</source_model>
+                </field>
+            </group>
+            <group id="learning_center_access_form" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Learning Center Access Form Configuration</label>
+                <field id="recipient_email" translate="label comment" type="textarea" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Recipient Email</label>
+                    <comment>Please add email of the recipient, if you want multiple recipients add it in comma separated manner</comment>
+                </field>
+                <field id="send_email_code" translate="label" type="select" sortOrder="10"
+                       showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Send Email From</label>
+                    <source_model>Magento\Config\Model\Config\Source\Email\Identity</source_model>
+                </field>
+            </group>
+        </section>
+        <section id="wheelpros_salesforce" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1">
+            <label>Salesforce</label>
+            <tab>wheelpros</tab>
+            <resource>Wheelpros_Salesforce::salesforce_api</resource>
+            <group id="salesforce_api" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1">
+                <label>Salesforce Auth API Configuration</label>
+                <field id="auth_api" translate="label comment" type="text" sortOrder="10" showInDefault="1" showInWebsite="1">
+                    <label>Auth Api</label>
+                    <comment>Auth Api endpoint</comment>
+                </field>
+                <field id="client_id" translate="label comment" type="text" sortOrder="10" showInDefault="1" showInWebsite="1">
+                    <label>Client ID</label>
+                    <comment>Enter the client id</comment>
+                </field>
+                <field id="client_secret" translate="label comment" type="password" sortOrder="10" showInDefault="1" showInWebsite="1">
+                    <label>Client Secret</label>
+                    <comment>Enter the client secret</comment>
+                </field>
+                <field id="username" translate="label comment" type="text" sortOrder="10" showInDefault="1" showInWebsite="1">
+                    <label>Username</label>
+                    <comment>Enter the username</comment>
+                </field>
+                <field id="password" translate="label comment" type="password" sortOrder="10" showInDefault="1" showInWebsite="1">
+                    <label>Password</label>
+                    <comment>Enter the password</comment>
+                </field>
+            </group>
+            <group id="salesforce_order_api" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1">
+                <label>Salesforce API Configuration</label>
+                <field id="order_endpoint_url" translate="label comment" type="text" sortOrder="10" showInDefault="1" showInWebsite="1">
+                    <label>Order Api Endpoint URL</label>
+                    <comment>Order Api Endpoint to fetch dealer orders from Salesforce</comment>
+                </field>
+            </group>
+            <group id="redirection_url" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1">
+                <label>Redirection URLs configurations</label>
+                <field id="tech_and_data_feeds" translate="label comment" type="text" sortOrder="10" showInDefault="1" showInWebsite="1">
+                    <label>Redirection URL for Tech And Data Feeds</label>
+                    <comment>Enter the redirection for tech and data feeds</comment>
+                </field>
+                <field id="api" translate="label comment" type="text" sortOrder="10" showInDefault="1" showInWebsite="1">
+                    <label>Redirection URL for Api</label>
+                    <comment>Enter the redirection for api</comment>
+                </field>
+                <field id="media_and_content" translate="label comment" type="text" sortOrder="10" showInDefault="1" showInWebsite="1">
+                    <label>Redirection URL for Media and Content</label>
+                    <comment>Enter the redirection for media and content</comment>
+                </field>
+                <field id="news" translate="label comment" type="text" sortOrder="10" showInDefault="1" showInWebsite="1">
+                    <label>Redirection URL for News</label>
+                    <comment>Enter the redirection for news</comment>
+                </field>
+                <comment>Configure redirection URLs used for customer account dashboard</comment>
+            </group>
+        </section>
+    </system>
+</config>

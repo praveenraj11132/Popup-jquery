@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+    <default>
+        <wheelpros_customer>
+            <request_access_form>
+                <send_email_code>general</send_email_code>
+            </request_access_form>
+        </wheelpros_customer>
+    </default>
+</config>
